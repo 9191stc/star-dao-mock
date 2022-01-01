@@ -8,6 +8,7 @@ module MockModuleDaoProposal {
     use 0x1::Token;
     use 0x1::Signer;
     use 0x1::Errors;
+
     use 0xcccf61268df4d021405ef5d4041cb6d3::STD::STD;
     use 0xcccf61268df4d021405ef5d4041cb6d3::MockModuleConfig::{ParameterModifyCapability, Self};
 
@@ -26,7 +27,15 @@ module MockModuleDaoProposal {
         let token_issuer = Token::token_address<STD>();
         assert(Signer::address_of(account) == token_issuer, Errors::requires_address(ERR_NOT_AUTHORIZED));
 
-        move_to(account, MockModuleDaoProposalCapWrap { cap })
+        move_to(account, MockModuleDaoProposalCapWrap { cap });
+
+        Dao::plugin<STD>(
+            account,
+            100,
+            1000000,
+            10,
+            100,
+        );
     }
 
     /// Start a proposal

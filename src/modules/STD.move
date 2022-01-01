@@ -16,7 +16,6 @@ module STD {
     use 0x1::Token;
     use 0x1::Account;
     use 0x1::Signer;
-    use 0x1::Dao;
 
     /// STD token marker.
     struct STD has copy, drop, store {}
@@ -30,14 +29,6 @@ module STD {
     public fun init(account: &signer) {
         Token::register_token<STD>(account, PRECISION);
         Account::do_accept_token<STD>(account);
-
-        Dao::plugin<STD>(
-            account,
-            100,
-            1000000,
-            10,
-            100,
-        );
     }
 
     // Mint function, block ability of mint and burn after execution
